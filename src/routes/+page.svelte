@@ -44,26 +44,27 @@
 
 </script>
 
-<h1>Welcome to Consulting Ninja Lofi Devops</h1>
-<h2>Powerball Number Generator! Good Luck</h2>
-
-<button on:click={generateSet(data.ballInfo.topRegBalls,data.ballInfo.topPowerBalls)}>Generate Set</button>
-<!--going to be nested lists be sure to add key to prevent funny behavior!-->
-{#each sets as set, setIndex (setIndex)}
-<div class="ball-container">
-    {#each set as ball, index (index)}
-    <div transition:fade="{{delay: 250,duration:300}}" class={index <5? 'ball' : 'powerball'}>
-        <span>{ball}</span>
-    </div>
-    {/each}
-    <button class="btn-delete" transition:fade="{{delay: 250,duration:300}}" on:click={handleDelete(setIndex)}>
-        <span class="material-symbols-outlined">
-            delete
-            </span>
-    </button>
+<div class="header-wrapper">
+    <h1>Welcome to the PowerBall Generator (Beta)</h1>
+    <h2>I wish you luck!</h2>
+    <button on:click={generateSet(data.ballInfo.topRegBalls,data.ballInfo.topPowerBalls)}>Generate Set</button>
 </div>
-
-{/each}
+    <div class="container-wrapper">
+    
+        {#each sets as set, setIndex (setIndex)}
+            <div class="ball-wrapper" >
+                {#each set as ball, index (index)}
+                    <div transition:fade="{{delay: 250, duration: 300}}" class={index <5? 'ball' : 'powerball'}><span>{ball}</span></div>
+                {/each}
+                <button class="btn-delete" on:click={handleDelete(setIndex)} transition:fade="{{delay: 250, duration: 300}}" >
+                    <span class="material-symbols-outlined">
+                        delete
+                        </span>
+                </button>
+            </div>
+        {/each}
+    
+    </div>
 
 
 
@@ -75,11 +76,24 @@
         background-color: #242424;
         text-align: center;
     }
+    .btn-delete:hover{
+        box-shadow: 0 0 10px #fff;
+        transition: all 0.2s ease-in-out;
+        opacity: .5;
+        cursor:pointer
+    }
     .material-symbols-outlined{
         color:#FFF;
         height: auto;
     }
-    .ball-container{
+    .container-wrapper{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+    .ball-wrapper{
+
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -107,7 +121,7 @@
         height: 30px;
         width: 30px;
         border-radius: 50%;
-        margin-right: 1em;
+        margin-right: .3em;
         margin-bottom: .5em;
         padding: .5em;
         display: flex;
