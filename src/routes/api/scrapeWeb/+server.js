@@ -1,7 +1,7 @@
 import * as cheerio from 'cheerio';
 import * as axios from 'axios';
 
-async function webScraper(){
+async function scrapeWeb(){
     //rules changed last this year so we only want results using latest powerball rule set to avoid skewed data
     let year = 2016;
     let regBalls = {};
@@ -58,12 +58,15 @@ async function webScraper(){
 }
 
 
-export async function load(){
-    //If you choose
-    console.log("loading...")
-    return{
-        ballInfo: await webScraper()
-    }
-}
+//load functions have no NODE JS availability in Vercel apparently need to refactor to make this work for deployment there! Lets make it an end point and run scrape on load client side
 
-//off to a good start hope you enjoyed this have a great day! 
+export async function GET(){
+    try{
+        const results = await scrapeWeb();
+        return new Response(JSON.stringify(results),{status:200})
+    }
+    catch(error){
+        return new Response(JSON.stringify({success:false,error:true,message:"Scrape failed",data:error}),{status:200})
+    }
+    
+}

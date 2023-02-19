@@ -47,7 +47,7 @@
 <div class="header-wrapper">
     <h1>Welcome to the PowerBall Generator (Beta)</h1>
     <h2>I wish you luck!</h2>
-    <button on:click={generateSet(data.ballInfo.topRegBalls,data.ballInfo.topPowerBalls)}>Generate Set</button>
+    <button on:click={generateSet(data.ballInfo.topRegBalls??null,data.ballInfo.topPowerBalls??null)}>Generate Set</button>
 </div>
     <div class="container-wrapper">
     
