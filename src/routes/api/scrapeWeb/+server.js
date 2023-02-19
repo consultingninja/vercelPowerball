@@ -61,9 +61,15 @@ async function scrapeWeb(){
 //load functions have no NODE JS availability in Vercel apparently need to refactor to make this work for deployment there! Lets make it an end point and run scrape on load client side
 
 export async function GET(){
-
+    try{
         const results = await scrapeWeb();
         return new Response(JSON.stringify(results),{status:200})
+    }
+    catch(error){
+        return new Response(JSON.stringify(error),{status:500})
+    }
+
 
     
 }
+
