@@ -1,5 +1,5 @@
-import * as cheerio from 'cheerio';
-import * as axios from 'axios';
+import cheerio from 'cheerio';
+import axios from 'axios';
 
 async function scrapeWeb(){
     //rules changed last this year so we only want results using latest powerball rule set to avoid skewed data
