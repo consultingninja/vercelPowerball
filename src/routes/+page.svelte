@@ -7,31 +7,30 @@
 
     let sets = [];
     function generateSet(topRegBalls,topPowerBalls){
-        let set = [];
-        if(!topRegBalls || !topPowerBalls)return
-        while(set.length < 5){
-            //generate a random set of 5 regular balls from the list of top 10
+        let set = new Set();
+        if(!topRegBalls || !topPowerBalls) return;
+        while(set.size < 5){
             let randomIndex = Math.floor(Math.random() * topRegBalls.length);
             let randomObject = topRegBalls[randomIndex];
-
-            //even though technically allowed in powerball this is super rare to have the same number twice in one drawing, lets just not do it
-            //whoops see what I did? these keys are not going to match!
-            //was pushing an int, but comparing the object key to the int! that would never work lol
-            if(!set.includes(parseInt(randomObject.key))){
-                set.push(parseInt(randomObject.key))
+            if(!set.has(parseInt(randomObject.key))){
+            set.add(parseInt(randomObject.key));
             }
         }
-
-        //after we have 5 regular balls we need one red ball
-        let randomIndex = Math.floor(Math.random() * topPowerBalls.length);
-        let randomObject = topPowerBalls[randomIndex];
-        set.push(parseInt(randomObject.key));
-        //push the new set into the list of sets and make sure Svelte updates with assignment
-        sets.push(set);
+        let redBallAdded = false;
+        while(!redBallAdded){
+            let randomIndex = Math.floor(Math.random() * topPowerBalls.length);
+            let randomObject = topPowerBalls[randomIndex];
+            if(!set.has(parseInt(randomObject.key))){
+            set.add(parseInt(randomObject.key));
+            redBallAdded = true;
+            }
+        }
+        sets.push(Array.from(set));
         sets = sets;
-        //if you want to check
         console.log('sets', sets);
-    }
+        }
+
+
 
     function handleDelete(index){
         //need to be able to delete them!
